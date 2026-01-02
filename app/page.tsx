@@ -123,12 +123,16 @@ ${message}`;
                 {t.hero.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
-                  {t.hero.cta_primary}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                  <a href="#kontak">
+                    {t.hero.cta_primary}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
-                <Button variant="outline" size="lg" className="border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white bg-transparent">
-                  {t.hero.cta_secondary}
+                <Button asChild variant="outline" size="lg" className="border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white bg-transparent">
+                  <a href="#produk">
+                    {t.hero.cta_secondary}
+                  </a>
                 </Button>
               </div>
             </div>
