@@ -21,6 +21,31 @@ export default function Home() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const t = dict[lang];
 
+  const handleDownload = () => {
+    alert("Maaf, katalog PDF belum tersedia saat ini. Silakan hubungi kami untuk versi digital terbaru.\n\n(Sorry, PDF catalog is not available yet. Please contact us for the latest digital version.)");
+  };
+
+  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const company = formData.get('company');
+    const country = formData.get('country');
+    const email = formData.get('email');
+    const qty = formData.get('qty');
+    const message = formData.get('message');
+
+    const subject = `New RFQ from ${company} (${country})`;
+    const body = `Name/Company: ${company}
+Country: ${country}
+Email: ${email}
+Qty: ${qty} Tons
+
+Message:
+${message}`;
+
+    window.location.href = `mailto:sales@indocharcoal.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-500 selection:text-white">
       {/* Navigation */}
@@ -366,33 +391,35 @@ export default function Home() {
                   <CardTitle>{t.contact.form.title}</CardTitle>
                   <CardDescription>{t.contact.form.subtitle}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="company">{t.contact.form.company}</Label>
-                      <Input id="company" placeholder="PT. Global Import..." />
+                <form onSubmit={handleContactSubmit}>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="company">{t.contact.form.company}</Label>
+                        <Input id="company" name="company" placeholder="PT. Global Import..." required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="country">{t.contact.form.country}</Label>
+                        <Input id="country" name="country" placeholder="Contoh: Saudi Arabia" required />
+                      </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="country">{t.contact.form.country}</Label>
-                      <Input id="country" placeholder="Contoh: Saudi Arabia" />
+                      <Label htmlFor="email">{t.contact.form.email}</Label>
+                      <Input id="email" name="email" type="email" placeholder="email@company.com" required />
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">{t.contact.form.email}</Label>
-                    <Input id="email" type="email" placeholder="email@company.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="qty">{t.contact.form.qty}</Label>
-                    <Input id="qty" type="number" placeholder="Min. 18 Ton (1x20ft)" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">{t.contact.form.message}</Label>
-                    <Textarea id="message" placeholder="..." />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold">{t.contact.form.submit}</Button>
-                </CardFooter>
+                    <div className="space-y-2">
+                      <Label htmlFor="qty">{t.contact.form.qty}</Label>
+                      <Input id="qty" name="qty" type="number" placeholder="Min. 18 Ton (1x20ft)" required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message">{t.contact.form.message}</Label>
+                      <Textarea id="message" name="message" placeholder="..." required />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold">{t.contact.form.submit}</Button>
+                  </CardFooter>
+                </form>
               </Card>
             </div>
           </div>
